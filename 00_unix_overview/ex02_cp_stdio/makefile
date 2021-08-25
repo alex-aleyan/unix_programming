@@ -12,3 +12,4 @@ all:
 
 clean : 
 	rm -f *.run *.i *.o *.s *.core
+	git clean -f
