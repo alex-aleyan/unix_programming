@@ -1,4 +1,12 @@
-#include "apue.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include <time.h>
+#include <sys/types.h>
+
+//#include "apue.h"
 #include <dirent.h>
 
 
