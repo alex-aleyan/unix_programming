@@ -23,9 +23,11 @@ int main(int argc, char *argv[])
     if (argc != 2) {
         bailverbose("must pass exactly 1 argument", __FILE__, __LINE__);
         //err_quit("usage: ls directory_name");
+        fputs(strerror(errno), stderr);
     }
     
     if ((dp = opendir(argv[1])) == NULL) { // opendir comes from dirent.h
+        fputs(strerror(errno), stderr);
         bailverbose("failed to open dir", __FILE__, __LINE__);
         //err_sys("can’t open %s", argv[1]);
     }

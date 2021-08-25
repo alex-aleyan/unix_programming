@@ -26,13 +26,17 @@ int main(void)
     
     while ((c = getc(stdin)) != EOF)
     
-    if (putc(c, stdout) == EOF)
+    if (putc(c, stdout) == EOF) {
         bailverbose("stdout", __FILE__, __LINE__);
         //err_sys("output error");
+        fputs(strerror(errno), stderr);
+    }
     
-    if (ferror(stdin))
+    if (ferror(stdin)) {
         bailverbose("STDOUT_FILENO", __FILE__, __LINE__);
         //err_sys("input error");
+        fputs(strerror(errno), stderr);
+    }
     
     exit(0);
 }
