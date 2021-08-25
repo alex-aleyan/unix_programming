@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
     while ((dirp = readdir(dp)) != NULL) // readdir comes from dirent.h
         printf("%s\n", dirp->d_name);
     
+    // closedir comes from dirent.h
     closedir(dp);
     
     exit(0);
