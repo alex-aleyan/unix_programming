@@ -18,18 +18,14 @@ int main(int argc, char *argv[])
     struct dirent *dirp; // comes from dirent.h->bits/dirent.h
     
     if (argc != 2) {
-        //printf("File %s(%d)\n", __FILE__, __LINE__);
         bailverbose("must pass exactly 1 argument", __FILE__, __LINE__);
         //err_quit("usage: ls directory_name");
     }
     
     if ((dp = opendir(argv[1])) == NULL) { // opendir comes from dirent.h
-        //printf("File %s(%d)\n", __FILE__, __LINE__);
         bailverbose("failed to open dir", __FILE__, __LINE__);
-        //bail("1: bailing at main() on line __LINE__");
-    }
-
         //err_sys("can’t open %s", argv[1]);
+    }
     
     while ((dirp = readdir(dp)) != NULL) // readdir comes from dirent.h
         printf("%s\n", dirp->d_name);
