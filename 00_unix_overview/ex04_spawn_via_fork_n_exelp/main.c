@@ -32,6 +32,7 @@ int main(void)
         /* Use fork + exec to spawn a child process */
         if ((pid = fork()) < 0) {
             //err_sys("fork error");
+            fputs(strerror(errno), stderr);
         } else if (pid == 0) { /* child */
             execlp(buf, buf, (char *) 0);
             //err_ret("couldn’t execute: %s", buf);
@@ -39,8 +40,10 @@ int main(void)
         }
         
         /* parent */
-        if ((pid = waitpid(pid, &status, 0)) < 0) // wait on the child process to finish
-        //err_sys("waitpid error");
+        if ((pid = waitpid(pid, &status, 0)) < 0) { // wait on the child process to finish
+            //err_sys("waitpid error");
+            fputs(strerror(errno), stderr);
+        }
         printf("%% ");
     }
     exit(0);
