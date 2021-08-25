@@ -6,7 +6,8 @@
 #include <time.h>
 #include <sys/types.h>
 
-//#include "apue.h"
+//#include "../../apue/include/apue.h"
+#include "../../../common/c_cpp/c/include/func.h"
 #include <dirent.h>
 
 
@@ -15,11 +16,13 @@ int main(int argc, char *argv[])
     DIR *dp;
     struct dirent *dirp;
     
-    if (argc != 2) 
-        err_quit("usage: ls directory_name");
+    if (argc != 2)
+        bail("0: bailing at main() on line __LINE__");
+        //err_quit("usage: ls directory_name");
     
     if ((dp = opendir(argv[1])) == NULL)
-        err_sys("can’t open %s", argv[1]);
+        bail("1: bailing at main() on line __LINE__");
+        //err_sys("can’t open %s", argv[1]);
     
     while ((dirp = readdir(dp)) != NULL)
         printf("%s\n", dirp->d_name);
