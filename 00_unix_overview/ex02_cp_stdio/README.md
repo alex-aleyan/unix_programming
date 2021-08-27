@@ -1,4 +1,8 @@
-Compile:
+- Compile:
+    ```
     make
-Run
+    ```
+- Run:
+    ```
     ./cp.run > test.txt
+    ```
