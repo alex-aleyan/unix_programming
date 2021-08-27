@@ -15,9 +15,10 @@
 //#include "../../apue/include/apue.h"
 #include <dirent.h> // provides dir manipulation funcs and data types.
 
-void sig_int(int signo)
+void my_isr(int signo)
 {
     printf("Caught your interrupt!\n%% ");
+    bailverbose("Bailing out.", __FILE__, __LINE__);
 }
 
 int main(void)
@@ -26,8 +27,10 @@ int main(void)
     pid_t pid;
     int status;
 
-    if (signal(SIGINT, sig_int) == SIG_ERR)
-        fputs(strerror(errno), stderr);
+    signal(SIGINT, my_isr);
+    //if (signal(SIGINT, my_isr) == SIG_ERR)
+        //bailverbose("Error:", __FILE__, __LINE__);
+        //fputs(strerror(errno), stderr);
         //err_sys("signal error");
 
     printf("%% "); /* print prompt (printf requires %% to print %) */
@@ -56,7 +59,4 @@ int main(void)
     }
     exit(0);
 }
-
-
-
 
