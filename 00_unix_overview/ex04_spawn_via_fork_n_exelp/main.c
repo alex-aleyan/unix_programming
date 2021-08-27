@@ -25,7 +25,14 @@ int main(void)
     printf("%% "); /* print prompt (printf requires %% to print %) */
     
     while (fgets(buf, MAXLINE, stdin) != NULL) {
-    
+        
+        /*
+         * Because each line returned by fgets is terminated with a newline character,
+         * followed by a null byte, we use the standard C function strlen to calculate the
+         * length of the string, and then replace the newline with a null byte. We do this
+         * because the execlp function wants a null-terminated argument, not a
+         * newline-terminated argument.
+         */
         if (buf[strlen(buf) - 1] == '\n')
         buf[strlen(buf) - 1] = 0; /* replace newline with null */
         
