@@ -36,17 +36,29 @@ int main(void)
         if (buf[strlen(buf) - 1] == '\n')
         buf[strlen(buf) - 1] = 0; /* replace newline with null */
         
-        /* Use fork + exec to spawn a child process */
+        /* Use fork + exec to spawn a child process (a copy of the caller).
+         * - >0: fork returns process ID of a child which is >0 thus indicating to a parent 
+         *   that this process is a parent.
+         * - =0: fork returns 0 to a child process thus indicating that this process is a child.
+         * - <0: fork returns a value <0 to indicate that an error occured.
+         * - Because fork creates a new process, it is called once by the parent, but returns twice in 
+         *   the parent and in the child.  */
         if ((pid = fork()) < 0) {
             //err_sys("fork error");
             fputs(strerror(errno), stderr);
         } else if (pid == 0) { /* child */
+            // calling fork() followed by execlp() is called spawning a process.
+            // run execlp to execute a command that was read as a string from STDIN stream.
             execlp(buf, buf, (char *) 0);
             //err_ret("couldn’t execute: %s", buf);
+            // Here we hard type the return value of the child. Perhaps returning its own PID would make more sense?
             exit(127);
         }
         
-        /* parent */
+        /* parent
+         * waitpid returns the termination status of the child
+         *     - if <0, error occured.
+         */
         if ((pid = waitpid(pid, &status, 0)) < 0) { // wait on the child process to finish
             //err_sys("waitpid error");
             fputs(strerror(errno), stderr);
