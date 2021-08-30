@@ -24,6 +24,8 @@ int main(void)
     int status;
     printf("%% "); /* print prompt (printf requires %% to print %) */
     
+    printf("Parent's PID from within the parent process: %d\n", (long)getpid());
+
     while (fgets(buf, MAXLINE, stdin) != NULL) {
         
         /*
@@ -36,6 +38,7 @@ int main(void)
         if (buf[strlen(buf) - 1] == '\n')
         buf[strlen(buf) - 1] = 0; /* replace newline with null */
         
+
         /* Use fork + exec to spawn a child process (a copy of the caller).
          * - >0: fork returns process ID of a child which is >0 thus indicating to a parent 
          *   that this process is a parent.
@@ -52,9 +55,13 @@ int main(void)
             execlp(buf, buf, (char *) 0);
             //err_ret("couldn’t execute: %s", buf);
             // Here we hard type the return value of the child. Perhaps returning its own PID would make more sense?
+            printf("Child's PID from within the child process: %d\n", pid);
             exit(127);
+        } else { /* parent */
+            printf("Child's PID from within the parent process: %d\n", pid);
         }
-        
+ 
+       
         /* parent
          * waitpid returns the termination status of the child
          *     - if <0, error occured.
@@ -63,6 +70,7 @@ int main(void)
             //err_sys("waitpid error");
             fputs(strerror(errno), stderr);
         }
+        printf("PID: %d\n", pid);
         printf("%% ");
     }
     exit(0);
