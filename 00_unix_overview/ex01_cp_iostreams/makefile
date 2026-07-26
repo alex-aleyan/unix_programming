@@ -36,7 +36,7 @@ LDLIBS :=
 # **********************
 
 help:
-	@echo "run \"make ls-run\" to build"
+	@echo "run \"make $(BIN)\" to build"
 
 $(BIN): $(OBJS1) $(OBJS2)
 	$(CC) $(CC_FLAGS) $^ -o $@ $(LDLIBS)
