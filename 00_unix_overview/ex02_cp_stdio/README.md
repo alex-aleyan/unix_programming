@@ -1,3 +1,5 @@
+NOTE: does not work once compiled and run - investigate!
+
 - Compile:
     ```
     make
